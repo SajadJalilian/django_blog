@@ -15,3 +15,23 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk': self.pk})
+
+
+class Category(models.Model):
+    title = models.CharField(max_length=200)
+
+    class Meta:
+        verbose_name_plural = 'categories'
+
+    def __str__(self):
+        return self.title
+
+
+class Comment(models.Model):
+    name = models.CharField(max_length=200)
+    content = models.TextField()
+    pub_date = models.DateTimeField(default=timezone.now)
+    article = models.ForeignKey(Post, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return '{} - {}'.format(self.name, self.content[:20])

@@ -11,7 +11,7 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
-from .models import Post
+from .models import Post, Category, Comment
 
 
 class PostListView(ListView):
@@ -70,6 +70,44 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == post.author:
             return True
         return False
+
+
+class CategoryListView(ListView):
+    model = Category
+    template_object_name = 'blog/category.html'
+    context_object_name = 'categories'
+    ordering = ['title']
+    paginate_by = 5
+
+
+class CategoryCreateView(LoginRequiredMixin, CreateView):
+    model = Category
+    fields = ['title']
+
+
+class CategoryUpdateView(LoginRequiredMixin, UpdateView):
+    model = Category
+    fields = ['title']
+
+
+class CategoryDeteleView(LoginRequiredMixin, DeleteView):
+    model = Category
+    success_url = '/'
+
+
+class CommentListView(ListView):
+    model = Comment
+    context_object_name = 'comments'
+    ordering = ['-pub_date']
+
+
+class CommentCreateView(CreateView):
+    model = Comment
+    fields = ['name', 'content']
+
+
+class CommentDeleteView(DeleteView):
+    model = Comment
 
 
 def about(request):
