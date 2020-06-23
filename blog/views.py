@@ -33,6 +33,14 @@ class UserPostListView(ListView):
         return Post.objects.filter(author=user).order_by('-date_posted')
 
 
+class CategoryPostListView(ListView):
+    model = Post
+    template_name = 'blog/home.html'
+    context_object_name = 'posts'
+    ordering = ['-date_posted']
+    paginate_by = 5
+
+
 class PostDetailView(DetailView):
     model = Post
 
