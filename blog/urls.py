@@ -12,7 +12,7 @@ from .views import (
     CategoryListView,
     CategoryCreateView,
     CategoryUpdateView,
-    CategoryDeteleView,
+    CategoryDeleteView,
     # Comment
     CommentListView,
     CommentCreateView,
@@ -23,16 +23,16 @@ from . import views
 urlpatterns = [
     path('', PostListView.as_view(), name='blog-home'),
     path('user/<str:username>', UserPostListView.as_view(), name='user-posts'),
-    path('post/<slug:slug>/', PostDetailView.as_view(), name='post-detail'),
+    path('post/p/<slug:slug>/', PostDetailView.as_view(), name='post-detail'),
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
     path('post/new/', PostCreateView.as_view(), name='post-create'),
     # Category
     path('category/', CategoryListView.as_view(), name='category-list'),
-    path('category/<str:title>', CategoryPostListView.as_view(), name='category-post-list'),
+    path('category/c/<slug:slug>/', CategoryPostListView.as_view(), name='category-post-list'),
     path('category/new/', CategoryCreateView.as_view(), name='categoy-create'),
     path('category/update/', CategoryUpdateView.as_view(), name='category-update'),
-    path('category/delete/', CategoryDeteleView.as_view(), name='category-delete'),
+    path('category/delete/', CategoryDeleteView.as_view(), name='category-delete'),
     # Comment
     path('comment/create/', CommentCreateView.as_view(), name='comment-create'),
     path('comment/delete/', CommentDeleteView.as_view(), name='comment-delete'),

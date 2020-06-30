@@ -18,6 +18,7 @@ class PostListView(ListView):
     model = Post
     template_name = 'blog/home.html'
     context_object_name = 'posts'
+    slug_url_kwarg = 'slug'
     ordering = ['-date_posted']
     paginate_by = 5
 
@@ -25,6 +26,7 @@ class PostListView(ListView):
 class UserPostListView(ListView):
     model = Post
     template_name = 'blog/user_posts.html'
+    slug_url_kwarg = 'slug'
     context_object_name = 'posts'
     paginate_by = 5
 
@@ -37,6 +39,7 @@ class CategoryPostListView(ListView):
     model = Post
     template_name = 'blog/home.html'
     context_object_name = 'posts'
+    slug_url_kwarg = 'slug'
     ordering = ['-date_posted']
     paginate_by = 5
 
@@ -83,10 +86,11 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 class CategoryListView(ListView):
     model = Category
-    template_object_name = 'blog/category.html'
+    template_object_name = 'blog/category_list.html'
     context_object_name = 'categories'
+    slug_url_kwarg = 'slug'
     ordering = ['title']
-    paginate_by = 5
+    #paginate_by = 5
 
 
 class CategoryCreateView(LoginRequiredMixin, CreateView):
@@ -99,7 +103,7 @@ class CategoryUpdateView(LoginRequiredMixin, UpdateView):
     fields = ['title']
 
 
-class CategoryDeteleView(LoginRequiredMixin, DeleteView):
+class CategoryDeleteView(LoginRequiredMixin, DeleteView):
     model = Category
     success_url = '/'
 

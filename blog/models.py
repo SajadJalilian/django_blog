@@ -6,12 +6,18 @@ from django.urls import reverse
 
 class Category(models.Model):
     title = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True)
 
     class Meta:
         verbose_name_plural = 'categories'
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Category, self).save(*args, **kwargs)
+
 
 class Post(models.Model):
     title = models.CharField(max_length=100)
