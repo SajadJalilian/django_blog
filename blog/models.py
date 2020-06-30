@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
+from django.utils.text import slugify
 from django.urls import reverse
 
 class Category(models.Model):
@@ -14,6 +15,7 @@ class Category(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True)
     content = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -24,6 +26,11 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk': self.pk})
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(f'{timezone.now().year}-\
+        {timezone.now().month}-{timezone.now().day}-{self.title}')
+        super(Post, self).save(*args, **kwargs)
 
 
 class Comment(models.Model):

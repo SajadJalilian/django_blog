@@ -18,7 +18,7 @@
 			<small class="text-muted">{{ post.date_posted|date:"Y ,F ,d" }}</small>
 		</div>
 		<h2>
-			<a class="article-title" href="{% url 'post-detail' post.id %}"
+			<a class="article-title" href="{% url 'post-detail' post.slug %}"
 				>{{ post.title }}</a
 			>
 		</h2>

@@ -43,6 +43,7 @@ class CategoryPostListView(ListView):
 
 class PostDetailView(DetailView):
     model = Post
+    slug_url_kwarg = 'slug'
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
