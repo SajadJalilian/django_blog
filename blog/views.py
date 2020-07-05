@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.mixins import (
     LoginRequiredMixin,
     UserPassesTestMixin
@@ -18,7 +19,6 @@ class PostListView(ListView):
     model = Post
     template_name = 'blog/home.html'
     context_object_name = 'posts'
-    slug_url_kwarg = 'slug'
     ordering = ['-date_posted']
     paginate_by = 5
 
@@ -26,7 +26,6 @@ class PostListView(ListView):
 class UserPostListView(ListView):
     model = Post
     template_name = 'blog/user_posts.html'
-    slug_url_kwarg = 'slug'
     context_object_name = 'posts'
     paginate_by = 5
 
@@ -37,7 +36,6 @@ class UserPostListView(ListView):
 
 class PostDetailView(DetailView):
     model = Post
-    slug_url_kwarg = 'slug'
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
@@ -79,13 +77,25 @@ class CategoryListView(ListView):
     model = Category
     template_object_name = 'blog/category_list.html'
     context_object_name = 'categories'
-    slug_url_kwarg = 'slug'
     ordering = ['title']
 
 
-class CategoryPostListView(request, categories):
+def CategoryPostListView(request, categories):
     cats = Post.objects.filter(category__title=categories)
-    
+
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(cats, 10)
+    try:
+        cat = paginator.page(page)
+    except PageNotAnInteger:
+        cat = paginator.page(1)
+    except EmptyPage:
+        cat = paginator.page(paginator.num_pages)
+
+    return render(request, 'blog/home.html', {'post':cat})
+
+
 
 class CategoryCreateView(LoginRequiredMixin, CreateView):
     model = Category
