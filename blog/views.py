@@ -34,6 +34,11 @@ class UserPostListView(ListView):
         return Post.objects.filter(author=user).order_by('-date_posted')
 
 
+# def PostDetailView(request, title):
+#     post = Post.objects.get(title=title)
+#     user = request.username()
+#     return render(request, 'blog/post_detail.html', {'object':post, 'user':user})
+
 class PostDetailView(DetailView):
     model = Post
 
@@ -80,20 +85,20 @@ class CategoryListView(ListView):
     ordering = ['title']
 
 
-def CategoryPostListView(request, categories):
-    cats = Post.objects.filter(category__title=categories)
+def CategoryPostListView(request, category):
+    cats = Post.objects.filter(categories__title=category)
 
-    page = request.GET.get('page', 1)
+    # page = request.GET.get('page', 1)
 
-    paginator = Paginator(cats, 10)
-    try:
-        cat = paginator.page(page)
-    except PageNotAnInteger:
-        cat = paginator.page(1)
-    except EmptyPage:
-        cat = paginator.page(paginator.num_pages)
+    # paginator = Paginator(cats, 10)
+    # try:
+    #     cat = paginator.page(page)
+    # except PageNotAnInteger:
+    #     cat = paginator.page(1)
+    # except EmptyPage:
+    #     cat = paginator.page(paginator.num_pages)
 
-    return render(request, 'blog/home.html', {'post':cat})
+    return render(request, 'blog/category_post.html', {'post':cats})
 
 
 

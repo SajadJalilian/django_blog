@@ -29,7 +29,7 @@ urlpatterns = [
     path('post/new/', PostCreateView.as_view(), name='post-create'),
     # Category
     path('category/', CategoryListView.as_view(), name='category-list'),
-    path('category/c/<str:categories>/', CategoryPostListView, name='category-post'),
+    path('category/c/<str:category>/', CategoryPostListView, name='category-post'),
     path('category/new/', CategoryCreateView.as_view(), name='categoy-create'),
     path('category/update/', CategoryUpdateView.as_view(), name='category-update'),
     path('category/delete/', CategoryDeleteView.as_view(), name='category-delete'),
