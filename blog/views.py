@@ -35,15 +35,6 @@ class UserPostListView(ListView):
         return Post.objects.filter(author=user).order_by('-date_posted')
 
 
-class CategoryPostListView(ListView):
-    model = Post
-    template_name = 'blog/home.html'
-    context_object_name = 'posts'
-    slug_url_kwarg = 'slug'
-    ordering = ['-date_posted']
-    paginate_by = 5
-
-
 class PostDetailView(DetailView):
     model = Post
     slug_url_kwarg = 'slug'
@@ -90,8 +81,11 @@ class CategoryListView(ListView):
     context_object_name = 'categories'
     slug_url_kwarg = 'slug'
     ordering = ['title']
-    #paginate_by = 5
 
+
+class CategoryPostListView(request, categories):
+    cats = Post.objects.filter(category__title=categories)
+    
 
 class CategoryCreateView(LoginRequiredMixin, CreateView):
     model = Category

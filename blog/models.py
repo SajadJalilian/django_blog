@@ -6,7 +6,6 @@ from django.urls import reverse
 
 class Category(models.Model):
     title = models.CharField(max_length=200)
-    slug = models.SlugField(unique=True)
 
     class Meta:
         verbose_name_plural = 'categories'
@@ -14,14 +13,9 @@ class Category(models.Model):
     def __str__(self):
         return self.title
 
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
-        super(Category, self).save(*args, **kwargs)
-
 
 class Post(models.Model):
     title = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True)
     content = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -32,12 +26,7 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk': self.pk})
-    
-    def save(self, *args, **kwargs):
-        self.slug = slugify(f'{timezone.now().year}-\
-        {timezone.now().month}-{timezone.now().day}-{self.title}')
-        super(Post, self).save(*args, **kwargs)
-
+        
 
 class Comment(models.Model):
     name = models.CharField(max_length=200)
