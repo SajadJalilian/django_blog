@@ -86,19 +86,19 @@ class CategoryListView(ListView):
 
 
 def CategoryPostListView(request, category):
-    cats = Post.objects.filter(categories__title=category)
+    cats = Post.objects.filter(categories__title=category).order_by('-date_posted')
 
-    # page = request.GET.get('page', 1)
+    page = request.GET.get('page', 10)
 
-    # paginator = Paginator(cats, 10)
-    # try:
-    #     cat = paginator.page(page)
-    # except PageNotAnInteger:
-    #     cat = paginator.page(1)
-    # except EmptyPage:
-    #     cat = paginator.page(paginator.num_pages)
+    paginator = Paginator(cats, 1)
+    try:
+        cat = paginator.page(page)
+    except PageNotAnInteger:
+        cat = paginator.page(1)
+    except EmptyPage:
+        cat = paginator.page(paginator.num_pages)
 
-    return render(request, 'blog/category_post.html', {'post':cats})
+    return render(request, 'blog/category_post.html', {'category_post':cat})
 
 
 
