@@ -98,7 +98,7 @@ def CategoryPostListView(request, category):
     except EmptyPage:
         cat = paginator.page(paginator.num_pages)
 
-    return render(request, 'blog/category_post.html', {'category_post':cat})
+    return render(request, 'blog/category_post.html', {'category_post':cat, 'category':category})
 
 
 

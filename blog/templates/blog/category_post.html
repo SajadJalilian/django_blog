@@ -1,6 +1,6 @@
 {% extends 'blog/base.html' %} 
 {% block content %}
-ddddddddd 
+ <h1>Category: {{category}}</h1>
 {% for post in category_post %}
 <article class="media content-section">
 	<img class="rounded-circle article-img" src="{{post.author.profile.image.url}}" />
