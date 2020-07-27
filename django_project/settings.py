@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     # DRF
     'rest_framework',
+    'captcha',
 ]
 
 MIDDLEWARE = [

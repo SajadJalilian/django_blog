@@ -1,0 +1,19 @@
+## Things to do:
+- [ ] post pictures
+    - [ ] adding picture to posts
+    - [ ] adding thumbnail to post
+- [x] adding pagination to post pages
+- [x] captcha
+    - [ ] showing error about filling wrong captcha
+    - [ ] customizing captcha
+- [ ] page visits
+- [ ] comments system
+    - [ ] adding comment form to post detail html file
+- [ ] RSS feed
+- [ ] Internationalization
+    - [ ] Jalali date
+- [ ] template
+    - [ ] new good looking template for blog
+    - [ ] adding dashboard
+- [ ] JWT
+- [ ] Redis for catching
