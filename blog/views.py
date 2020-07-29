@@ -35,18 +35,34 @@ class UserPostListView(ListView):
         return Post.objects.filter(author=user).order_by('-date_posted')
 
 
-class PostDetailView(DetailView):
-    model = Post
+def PostDetailView(request, pk):
+    post = get_object_or_404(Post, id=pk)
+    comments = Comment.objects.filter(post=post).order_by('-id')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context ['comments'] = Comment.objects. all()
-        context['form'] = CommentForm()
-        return context
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST or None)
+        if comment_form.is_valid():
+            content = request.POST.get('content')
+            name = request.POST.get('name')
+            email = request.POST.get('email')
+
+            comment = Comment.objects.create(post=post, content=content, name=name, email=email)
+            comment.save()
+    else:
+        comment_form = CommentForm
+
+    context = {
+        'post': post,
+        'comments': comments,
+        'comment_form': comment_form,
+    }
+
+    return render(request, 'blog/post_detail.html', context)
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
+    template_name = 'blog/post_create.html'
     fields = ['title', 'content']
 
     def form_valid(self, form):
@@ -56,6 +72,8 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
+    template_name = 'blog/post_create.html'
+
     fields = ['title', 'content']
 
     def form_valid(self, form):
@@ -71,6 +89,8 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
+    template_name = 'blog/post_confirm_delete.html'
+
     success_url = '/'
 
     def test_func(self):
@@ -92,7 +112,7 @@ def CategoryPostListView(request, category):
 
     page = request.GET.get('page', 10)
 
-    paginator = Paginator(cats, 1)
+    paginator = Paginator(cats, 10)
     try:
         cat = paginator.page(page)
     except PageNotAnInteger:
@@ -118,22 +138,17 @@ class CategoryDeleteView(LoginRequiredMixin, DeleteView):
     success_url = '/'
 
 
-class CommentListView(ListView):
-    model = Comment
-    context_object_name = 'comments'
-    ordering = ['-pub_date']
+# class CommentCreateView(CreateView):
+#     model = Comment
+#     template_name = 'blog/post_detail.html'
 
+#     fields = ['name', 'content','email']
 
-class CommentCreateView(CreateView):
-    model = Comment
-    fields = ['name', 'content','email']
+#     def form_valid(self, form):
+#         return super().form_valid(form)
 
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
-
-class CommentDeleteView(DeleteView):
-    model = Comment
+# class CommentDeleteView(DeleteView):
+#     model = Comment
 
 
 def about(request):
