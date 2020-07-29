@@ -30,8 +30,9 @@ class Post(models.Model):
 class Comment(models.Model):
     name = models.CharField(max_length=200)
     content = models.TextField()
+    email = models.EmailField()
     pub_date = models.DateTimeField(default=timezone.now)
-    article = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
     def __str__(self):
         return '{} - {}'.format(self.name, self.content[:20])

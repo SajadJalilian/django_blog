@@ -13,6 +13,7 @@ from django.views.generic import (
     DeleteView
 )
 from .models import Post, Category, Comment
+from .forms import CommentForm
 
 
 class PostListView(ListView):
@@ -34,13 +35,14 @@ class UserPostListView(ListView):
         return Post.objects.filter(author=user).order_by('-date_posted')
 
 
-# def PostDetailView(request, title):
-#     post = Post.objects.get(title=title)
-#     user = request.username()
-#     return render(request, 'blog/post_detail.html', {'object':post, 'user':user})
-
 class PostDetailView(DetailView):
     model = Post
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context ['comments'] = Comment.objects. all()
+        context['form'] = CommentForm()
+        return context
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
@@ -101,7 +103,6 @@ def CategoryPostListView(request, category):
     return render(request, 'blog/category_post.html', {'category_post':cat, 'category':category})
 
 
-
 class CategoryCreateView(LoginRequiredMixin, CreateView):
     model = Category
     fields = ['title']
@@ -125,8 +126,11 @@ class CommentListView(ListView):
 
 class CommentCreateView(CreateView):
     model = Comment
-    fields = ['name', 'content']
+    fields = ['name', 'content','email']
 
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
 class CommentDeleteView(DeleteView):
     model = Comment
