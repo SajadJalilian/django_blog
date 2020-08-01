@@ -5,6 +5,8 @@ from django.shortcuts import get_object_or_404, render
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
 
+from analytics.signals import object_viewed_signal
+
 from .forms import CommentForm
 from .models import Category, Comment, Post
 
@@ -29,6 +31,7 @@ class UserPostListView(ListView):
 
 
 def post_detail_view(request, pk):
+
     post = get_object_or_404(Post, id=pk)
     comments = Comment.objects.filter(post=post).order_by('-id')
 
@@ -49,6 +52,8 @@ def post_detail_view(request, pk):
         'comments': comments,
         'comment_form': comment_form,
     }
+
+    object_viewed_signal.send(post.__class__, instance=post, request=request)
 
     return render(request, 'blog/post_detail.html', context)
 

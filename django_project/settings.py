@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # DRF
     'rest_framework',
     'captcha',
+    'analytics',
 ]
 
 MIDDLEWARE = [
