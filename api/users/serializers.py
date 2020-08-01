@@ -1,8 +1,8 @@
-from users.models import Profile
-from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
-
+from django.contrib.auth.models import User
 from rest_framework import serializers
+
+from users.models import Profile
 
 
 class ProfileSerializer(serializers.ModelSerializer):

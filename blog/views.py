@@ -1,19 +1,12 @@
-from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.contrib.auth.mixins import (
-    LoginRequiredMixin,
-    UserPassesTestMixin
-)
-from django.views.generic import (
-    ListView,
-    DetailView,
-    CreateView,
-    UpdateView,
-    DeleteView
-)
-from .models import Post, Category, Comment
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.shortcuts import get_object_or_404, render
+from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
+                                  UpdateView)
+
 from .forms import CommentForm
+from .models import Category, Comment, Post
 
 
 class PostListView(ListView):
@@ -35,7 +28,7 @@ class UserPostListView(ListView):
         return Post.objects.filter(author=user).order_by('-date_posted')
 
 
-def PostDetailView(request, pk):
+def post_detail_view(request, pk):
     post = get_object_or_404(Post, id=pk)
     comments = Comment.objects.filter(post=post).order_by('-id')
 
@@ -107,7 +100,7 @@ class CategoryListView(ListView):
     ordering = ['title']
 
 
-def CategoryPostListView(request, category):
+def category_post_list_view(request, category):
     cats = Post.objects.filter(categories__title=category).order_by('-date_posted')
 
     page = request.GET.get('page', 10)
