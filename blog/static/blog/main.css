@@ -47,12 +47,21 @@ a.article-title:hover {
 
 .article-content {
     white-space: pre-line;
+    display: flex;
 }
 
 .article-img {
-    height: 65px;
-    width: 65px;
+    height: 50px;
+    width: 100px;
     margin-right: 16px;
+    float: right;
+}
+
+.article-detail-img {
+    height: 300px;
+    width: 500px;
+    margin-right: 16px;
+    float: right;
 }
 
 .article-metadata {

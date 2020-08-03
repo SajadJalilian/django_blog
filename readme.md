@@ -6,10 +6,11 @@
 
 - [ ] post pictures
   - [ ] adding picture to posts
-  - [ ] adding thumbnail to post
-  - [ ] adding 'Read more' to post
+  - [X] adding thumbnail to post
+  - [X] adding thumbnail to template
+  - [X] adding 'Read more' to post
 
-- [ ] Category
+- [X] Category
   - [ ] adding category to post form
 
 - [x] adding pagination to post pages
@@ -19,7 +20,8 @@
   - [ ] customizing captcha
   - [ ] using AJAX to refresh captcha
 
-- [ ] page visits
+- [X] page visits
+  - [X] saving ObjectViewed to database
 
 - [x] comments system
   - [x] adding comment form to post detail html file

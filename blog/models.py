@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
+from imagekit.models import ImageSpecField
+from pilkit.processors import Thumbnail
 
 
 class Category(models.Model):
@@ -17,9 +19,20 @@ class Category(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
+    image = models.ImageField(upload_to='image', default='default_post_image.jpg')
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     categories = models.ManyToManyField(Category)
+
+    image_medium = ImageSpecField(source='image',
+                                  processors=[Thumbnail(200, 100)],
+                                  format='JPEG',
+                                  options={'quality': 60})
+
+    image_small = ImageSpecField(source='image',
+                                 processors=[Thumbnail(100, 50)],
+                                 format='JPEG',
+                                 options={'quality': 60})
 
     def __str__(self):
         return self.title

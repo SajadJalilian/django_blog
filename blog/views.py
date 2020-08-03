@@ -136,18 +136,5 @@ class CategoryDeleteView(LoginRequiredMixin, DeleteView):
     success_url = '/'
 
 
-# class CommentCreateView(CreateView):
-#     model = Comment
-#     template_name = 'blog/post_detail.html'
-
-#     fields = ['name', 'content','email']
-
-#     def form_valid(self, form):
-#         return super().form_valid(form)
-
-# class CommentDeleteView(DeleteView):
-#     model = Comment
-
-
 def about(request):
     return render(request, 'blog/about.html', {'title': 'About'})
