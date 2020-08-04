@@ -4,7 +4,7 @@
   - [ ] post list page
   - [ ] post detail page
 
-- [ ] post pictures
+- [X] post pictures
   - [ ] adding picture to posts
   - [X] adding thumbnail to post
   - [X] adding thumbnail to template

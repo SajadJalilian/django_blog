@@ -1,0 +1,12 @@
+{% load static %}
+
+
+{% if title %}
+<title>Blog - {{ title }}</title>
+{% else %}
+<title>Blog Home</title>
+{% endif %}
+
+
+
+{% block content %}{% endblock %}

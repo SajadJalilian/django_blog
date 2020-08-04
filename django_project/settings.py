@@ -35,17 +35,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Blog App
-    'blog.apps.BlogConfig',
-    # Users App
-    'users.apps.UsersConfig',
+
+    # My Apps
+    'blog',
+    'users',
+    'analytics',
+    'dashboard',
+
     # Crispy forms
     'crispy_forms',
     # DRF
     'rest_framework',
     'captcha',
-    'analytics',
     'imagekit',
+    
 ]
 
 MIDDLEWARE = [
