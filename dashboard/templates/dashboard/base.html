@@ -16,7 +16,24 @@
     </head>
 
 <body>
-    
+
+    <a href="{% url 'dashboard:dashboard' %}">Dashboard</a>
+    <br>
+    <a href="{% url 'dashboard:posts' %}">Posts</a>
+    <br>
+    <a href="{% url 'blog:post-create' %}">Write Post</a>
+    <br>
+    <a href="{% url 'dashboard:categories' %}">Categories</a>
+    <br>
+    <a href="{% url 'blog:category-create' %}">Create Category</a>
+    <br>
+    <a href="{% url 'dashboard:comments' %}">Comments</a>
+    <br>
+    <a href="{% url 'dashboard:stats' %}">Stats</a>
+    <br>
+    <a href="{% url 'logout' %}">Logout</a>
+    <hr>
+
     {% block content %}{% endblock %}
 
 </body>

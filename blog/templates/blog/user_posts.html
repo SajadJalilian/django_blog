@@ -12,13 +12,13 @@
 	/>
 	<div class="media-body">
 		<div class="article-metadata">
-			<a class="mr-2" href="{% url 'user-posts' post.author.username %}"
+			<a class="mr-2" href="{% url 'blog:user-posts' post.author.username %}"
 				>{{ post.author }}</a
 			>
 			<small class="text-muted">{{ post.date_posted|date:"Y ,F ,d" }}</small>
 		</div>
 		<h2>
-			<a class="article-title" href="{% url 'post-detail' post.title %}"
+			<a class="article-title" href="{% url 'blog:post-detail' post.title %}"
 				>{{ post.title }}</a
 			>
 		</h2>

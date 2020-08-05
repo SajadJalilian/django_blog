@@ -5,6 +5,7 @@ from .views import (CategoryCreateView, CategoryDeleteView,  # Post; Category
                     PostDeleteView, PostListView, PostUpdateView,
                     UserPostListView, category_post_list_view,
                     post_detail_view, about)
+app_name = 'blog'
 
 urlpatterns = [
     path('', PostListView.as_view(), name='blog-home'),
@@ -16,7 +17,7 @@ urlpatterns = [
     # Category
     path('category/', CategoryListView.as_view(), name='category-list'),
     path('category/c/<str:category>/', category_post_list_view, name='category-post'),
-    path('category/new/', CategoryCreateView.as_view(), name='categoy-create'),
+    path('category/new/', CategoryCreateView.as_view(), name='category-create'),
     path('category/update/', CategoryUpdateView.as_view(), name='category-update'),
     path('category/delete/', CategoryDeleteView.as_view(), name='category-delete'),
     # About
