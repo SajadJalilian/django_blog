@@ -1,11 +1,15 @@
 # Things to do
 
-- [ ] adding dashboard to blog(admin panel)
+- [x] adding dashboard to blog(admin panel)
   - [ ] post list page
   - [ ] post detail page
+  - [ ] category list
+  - [ ] comment list
+  - [ ] stats
+
 
 - [X] post pictures
-  - [ ] adding picture to posts
+  - [x] adding picture to posts
   - [X] adding thumbnail to post
   - [X] adding thumbnail to template
   - [X] adding 'Read more' to post

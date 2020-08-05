@@ -1,12 +1,10 @@
 from django.urls import path
 
-from . import views
-
 from .views import (CategoryCreateView, CategoryDeleteView,  # Post; Category
                     CategoryListView, CategoryUpdateView, PostCreateView,
                     PostDeleteView, PostListView, PostUpdateView,
                     UserPostListView, category_post_list_view,
-                    post_detail_view)
+                    post_detail_view, about)
 
 urlpatterns = [
     path('', PostListView.as_view(), name='blog-home'),
@@ -22,5 +20,5 @@ urlpatterns = [
     path('category/update/', CategoryUpdateView.as_view(), name='category-update'),
     path('category/delete/', CategoryDeleteView.as_view(), name='category-delete'),
     # About
-    path('about/', views.about, name='blog-about'),
+    path('about/', about, name='blog-about'),
 ]

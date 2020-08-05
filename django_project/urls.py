@@ -21,8 +21,9 @@ urlpatterns = [
     path('password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(
         template_name='users/password_reset_complete.html'), name='password_reset_complete'),
     path('api/', include('api.urls')),
-    path('', include('blog.urls')),
     path('captcha/', include('captcha.urls')),
+    path('dashboard/', include('dashboard.urls')),
+    path('', include('blog.urls')),
 
 ]
 
