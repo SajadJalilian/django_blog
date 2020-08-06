@@ -55,9 +55,24 @@ def category_list_view(request):
 @login_required
 def post_list_view(request):
     title = 'Post List'
+    post_number = Post.objects.all().count()
+    post_list = Post.objects.all().order_by('-date_posted')
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(post_list, 5)
+
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
 
     context = {
         'title' : title,
+        'post_number' : post_number,
+        'posts' : posts,
+
     }
     
     return render(request, 'dashboard/post_list.html', context)
@@ -70,7 +85,6 @@ def comment_list_view(request):
     comment_list = Comment.objects.all().order_by('-pub_date')
 
     page = request.GET.get('page', 1)
-
     paginator = Paginator(comment_list, 5)
 
     try:

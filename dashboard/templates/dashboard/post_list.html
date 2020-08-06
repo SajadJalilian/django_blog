@@ -2,5 +2,37 @@
 
 {% block content %}
 <h1>post list</h1>
+<h3>Post number {{ post_number }}</h3>
+
+{% for post in posts %}
+
+    <p>{{ post.title }}
+    <br>
+    {{ post.content|truncatewords:10 }}
+    <br>
+    {{ post.date_posted }} | {{ post.author }}
+    <br>
+    {% for post in post.categories.all %}
+        {{ post.title }} |
+    {% endfor %}
+    </p>
+    <hr>
+
+{% endfor %}
+
+
+{% if posts.has_other_pages %}
+{% if posts.has_previous %}
+<a href="?page=1">First</a>
+<a href="?page={{ posts.previous_page_number }}">Previous</a>
+{% endif %}
+
+<a href="?page={{ posts.number }}">{{ posts.number }}</a>
+
+{% if posts.has_next %}
+<a href="?page={{ posts.next_page_number }}">Next</a>
+<a href="?page={{ posts.paginator.num_pages }}">Last</a>
+{% endif %}
+{% endif %}
 
 {% endblock content %}
