@@ -26,7 +26,7 @@
 
 {% if category_post.has_next %}
 <a class="btn btn-outline-info mb-4" href="?page={{ category_post.next_page_number }}">Next</a>
-<a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+<a class="btn btn-outline-info mb-4" href="?page={{ category_post.paginator.num_pages }}">Last</a>
 {% endif %}
 {% endif %}
 {% endblock content %}

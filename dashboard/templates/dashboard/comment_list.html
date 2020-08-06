@@ -2,5 +2,35 @@
 
 {% block content %}
 <h1>comments</h1>
+<h3>Number of comments {{ comment_number }}</h3>
+
+{% for comment in comments %}
+    <p>
+        {{ comment.content}}
+        <br>
+        {{ comment.name}}
+        <br>
+        {{ comment.email}}
+        <br>
+        {{ comment.pub_date}} |
+        {{ comment.post }}
+    </p>
+    <hr>
+{% endfor %}
+
+{% if comments.has_other_pages %}
+{% if comments.has_previous %}
+<a href="?page=1">First</a>
+<a href="?page={{ comments.previous_page_number }}">Previous</a>
+{% endif %}
+
+<a href="?page={{ comments.number }}">{{ comments.number }}</a>
+
+{% if comments.has_next %}
+<a href="?page={{ comments.next_page_number }}">Next</a>
+<a href="?page={{ comments.paginator.num_pages }}">Last</a>
+{% endif %}
+{% endif %}
+
 
 {% endblock content %}
