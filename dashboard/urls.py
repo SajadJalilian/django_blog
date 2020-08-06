@@ -7,9 +7,9 @@ app_name = 'dashboard'
 
 urlpatterns = [
     path('', dashboard_view , name='dashboard'),
-    path('categories', category_list_view , name='categories'),
-    path('comments', comment_list_view , name='comments'),
-    path('stats', stats_view , name='stats'),
-    path('posts', post_list_view , name='posts'),
-    path('post/detail', post_detail_view , name='post-update'),
+    path('categories/', category_list_view , name='categories'),
+    path('comments/', comment_list_view , name='comments'),
+    path('stats/', stats_view , name='stats'),
+    path('posts/', post_list_view , name='posts'),
+    path('post/detail/', post_detail_view , name='post-update'),
 ]

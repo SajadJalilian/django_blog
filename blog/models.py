@@ -15,6 +15,9 @@ class Category(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse('blog:category-post', kwargs={'category': self.title})
+
 
 class Post(models.Model):
     title = models.CharField(max_length=100)
@@ -38,7 +41,7 @@ class Post(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('post-detail', kwargs={'pk': self.pk})
+        return reverse('blog:post-detail', kwargs={'pk': self.pk})
         
 
 class Comment(models.Model):

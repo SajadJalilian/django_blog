@@ -36,9 +36,14 @@ def stats_view(request):
 @login_required
 def category_list_view(request):
     title = 'Categories'
+    category_number = Category.objects.all().count()
+    category_list = Category.objects.all()
 
     context = {
         'title' : title,
+        'category_number' : category_number,
+        'category_list': category_list,
+
     }
     
     return render(request, 'dashboard/category_list.html', context)

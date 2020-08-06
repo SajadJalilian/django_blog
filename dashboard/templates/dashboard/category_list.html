@@ -1,6 +1,12 @@
 {% extends 'dashboard/base.html' %}
 
 {% block content %}
-<h1>cagetorie</h1>
+<h1>categories</h1>
+<hr>
+<h2>List of categories</h2>
+
+{% for cat in category_list %}
+    <a href="{{ cat.get_absolute_url }}">{{ cat.title }}</a>
+{% endfor %}
 
 {% endblock content %}
