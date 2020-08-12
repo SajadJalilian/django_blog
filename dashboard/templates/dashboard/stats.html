@@ -6,5 +6,13 @@
 <h2>Total today hits: {{today_hit}}</h2>
 <h2>Total week hit: {{week_hit}}</h2>
 <h2>Total in monthly hit : {{monthly_hit}}</h2>
+<p>thirty days hit :
+    {%for day in thirty_days_hit %}
+
+    {{day}}
+    <br>
+
+    {% endfor %}
+</p>
 
 {% endblock content %}

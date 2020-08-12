@@ -8,8 +8,10 @@ from .utilities import get_client_ip
 
 User = settings.AUTH_USER_MODEL
 
+
 class ObjectViewed(models.Model):
-    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User, blank=True, null=True, on_delete=models.CASCADE)
     ip_address = models.CharField(max_length=220, blank=True, null=True)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
@@ -18,7 +20,7 @@ class ObjectViewed(models.Model):
 
     def __str__(self):
         return '{} viewed {}'.format(self.content_object, self.timestamp)
-    
+
     class Meta:
         ordering = ['-timestamp']
         verbose_name = 'Object viewed'
@@ -28,10 +30,11 @@ class ObjectViewed(models.Model):
 def get_object_viewed_receiver(sender, instance, request, *args, **kwargs):
     c_type = ContentType.objects.get_for_model(sender)
     new_view_obj = ObjectViewed.objects.create(
-        user = request.user,
-        content_type = c_type,
-        object_id = instance.id,
-        ip_address = get_client_ip(request)
+        user=request.user,
+        content_type=c_type,
+        object_id=instance.id,
+        ip_address=get_client_ip(request)
     )
+
 
 object_viewed_signal.connect(get_object_viewed_receiver)

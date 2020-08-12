@@ -15,14 +15,13 @@ def dashboard_view(request):
     comment_number = Comment.objects.all().count()
     category_number = Category.objects.all().count()
 
-
     context = {
-        'title' : title,
-        'post_count' : post_count,
-        'comment_number' : comment_number,
-        'category_number' : category_number,
+        'title': title,
+        'post_count': post_count,
+        'comment_number': comment_number,
+        'category_number': category_number,
     }
-    
+
     return render(request, 'dashboard/home.html', context)
 
 
@@ -31,22 +30,35 @@ def stats_view(request):
     title = 'Stats'
     total_hit = ObjectViewed.objects.all().count()
     today_hit = ObjectViewed.objects.filter(timestamp__gt=date.today()).count()
-    week_hit = ObjectViewed.objects.filter(timestamp__gt=date.today() - timedelta(days=7)).count()
-    monthly_hit = ObjectViewed.objects.filter(timestamp__month=datetime.now().month).count()
+    week_hit = ObjectViewed.objects.filter(
+        timestamp__gt=date.today() - timedelta(days=7)).count()
+    monthly_hit = ObjectViewed.objects.filter(
+        timestamp__month=datetime.now().month).count()
 
-    
-    
-    # monthly_hit
+    # add list of last 30 days with their ObjectViewed count as dictonery
+    thirty_days_hit = []
+    thirty_days_hit.append(
+        {date.today().isoformat(): ObjectViewed.objects.filter(
+            timestamp__gt=date.today()).count()}
+    )
+
+    for i in range(1, 30):
+        thirty_days_hit.append(
+            {(date.today() - timedelta(days=i)).isoformat(): ObjectViewed.objects.filter(
+                timestamp__date__exact=date.today() - timedelta(days=i)).count()}
+        )
+
     # three_month_hit
 
     context = {
-        'title' : title,
-        'total_hit' : total_hit,
+        'title': title,
+        'total_hit': total_hit,
         'today_hit': today_hit,
-        'week_hit' : week_hit,
+        'week_hit': week_hit,
         'monthly_hit': monthly_hit,
+        'thirty_days_hit': thirty_days_hit,
     }
-    
+
     return render(request, 'dashboard/stats.html', context)
 
 
@@ -57,12 +69,12 @@ def category_list_view(request):
     category_list = Category.objects.all()
 
     context = {
-        'title' : title,
-        'category_number' : category_number,
+        'title': title,
+        'category_number': category_number,
         'category_list': category_list,
 
     }
-    
+
     return render(request, 'dashboard/category_list.html', context)
 
 
@@ -83,12 +95,12 @@ def post_list_view(request):
         posts = paginator.page(paginator.num_pages)
 
     context = {
-        'title' : title,
-        'post_number' : post_number,
-        'posts' : posts,
+        'title': title,
+        'post_number': post_number,
+        'posts': posts,
 
     }
-    
+
     return render(request, 'dashboard/post_list.html', context)
 
 
@@ -108,13 +120,12 @@ def comment_list_view(request):
     except EmptyPage:
         comments = paginator.page(paginator.num_pages)
 
-
     context = {
-        'title' : title,
-        'comment_number' : comment_number,
-        'comments' : comments,
+        'title': title,
+        'comment_number': comment_number,
+        'comments': comments,
     }
-    
+
     return render(request, 'dashboard/comment_list.html', context)
 
 
@@ -123,7 +134,7 @@ def post_detail_view(request):
     title = 'Post Update'
 
     context = {
-        'title' : title,
+        'title': title,
     }
-    
+
     return render(request, 'dashboard/post_detail.html', context)
