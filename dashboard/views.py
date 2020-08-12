@@ -1,9 +1,10 @@
+from datetime import date, datetime, timedelta
+
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render
 
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-
-
+from analytics.models import ObjectViewed
 from blog.models import Category, Comment, Post
 
 
@@ -28,9 +29,22 @@ def dashboard_view(request):
 @login_required
 def stats_view(request):
     title = 'Stats'
+    total_hit = ObjectViewed.objects.all().count()
+    today_hit = ObjectViewed.objects.filter(timestamp__gt=date.today()).count()
+    week_hit = ObjectViewed.objects.filter(timestamp__gt=date.today() - timedelta(days=7)).count()
+    monthly_hit = ObjectViewed.objects.filter(timestamp__month=datetime.now().month).count()
+
+    
+    
+    # monthly_hit
+    # three_month_hit
 
     context = {
         'title' : title,
+        'total_hit' : total_hit,
+        'today_hit': today_hit,
+        'week_hit' : week_hit,
+        'monthly_hit': monthly_hit,
     }
     
     return render(request, 'dashboard/stats.html', context)

@@ -1,7 +1,7 @@
 from django.urls import include, path
 
-from .views import (category_list_view, comment_list_view, post_list_view,
-                    post_detail_view, dashboard_view, stats_view)
+from .views import (category_list_view, comment_list_view, dashboard_view,
+                    post_detail_view, post_list_view, stats_view)
 
 app_name = 'dashboard'
 
