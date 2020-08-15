@@ -1,5 +1,6 @@
 migrations/
 venv/
+.venv/
 .vscode/
 media/
 .idea/

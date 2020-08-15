@@ -132,6 +132,9 @@ def comment_list_view(request):
 @login_required
 def post_detail_view(request):
     title = 'Post Update'
+    # comments
+    # comment number
+    # author
 
     context = {
         'title': title,
