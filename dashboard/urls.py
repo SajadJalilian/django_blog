@@ -13,5 +13,5 @@ urlpatterns = [
     path('comments/<int:pk>/delete', comment_delete_view , name='comment-delete'),
     path('stats/', stats_view , name='stats'),
     path('posts/', post_list_view , name='posts'),
-    path('post/detail/', post_detail_view , name='post-update'),
+    path('post/<int:pk>/detail/', post_detail_view , name='post-detail'),
 ]

@@ -137,14 +137,16 @@ def comment_delete_view(request, pk):
 
 
 @login_required
-def post_detail_view(request):
+def post_detail_view(request, pk):
     title = 'Post Update'
-    # comments
-    # comment number
-    # author
+    post = Post.objects.get(id=pk)
+    comments = Comment.objects.filter(post__id=pk)
+    
 
     context = {
         'title': title,
+        'post': post,
+        'comments': comments,
     }
 
     return render(request, 'dashboard/post_detail.html', context)
