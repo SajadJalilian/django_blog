@@ -2,7 +2,7 @@ from datetime import date, datetime, timedelta
 
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from analytics.models import ObjectViewed
 from blog.models import Category, Comment, Post
@@ -127,6 +127,13 @@ def comment_list_view(request):
     }
 
     return render(request, 'dashboard/comment_list.html', context)
+
+
+@login_required
+def comment_delete_view(request, pk):
+    Comment.objects.get(id=pk).delete()
+
+    return redirect('dashboard:comments')
 
 
 @login_required

@@ -3,4 +3,13 @@
 {% block content %}
 <h1>post detail</h1>
 
+{% if post.author == user %}
+
+    <div>
+        <a href="{% url 'blog:post-update' post.id %}">Update</a>
+        <a href="{% url 'blog:post-delete' post.id %}">Delete</a>
+    </div>
+
+    {% endif %}
+
 {% endblock content %}

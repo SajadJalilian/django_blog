@@ -27,6 +27,7 @@ Django-Blog is blogging CMS. It's using Django-web-framework as backend and Djan
     - [ ] post author
   - [X] category list
   - [X] comment list
+    - [X] delete comments in dashboard
   - [X] stats
     - [ ] adding stats chart detail
 

@@ -15,6 +15,7 @@
         {{ comment.pub_date}} |
         {{ comment.post }}
     </p>
+    <a href="{% url 'dashboard:comment-delete' comment.pk %}">Delete</a>
     <hr>
 {% endfor %}
 

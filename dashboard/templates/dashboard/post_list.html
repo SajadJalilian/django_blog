@@ -6,6 +6,16 @@
 
 {% for post in posts %}
 
+    {% if post.author == user %}
+
+    <div>
+        <a href="{% url 'blog:post-update' post.id %}">Update</a>
+        <a href="{% url 'blog:post-delete' post.id %}">Delete</a>
+    </div>
+
+    {% endif %}
+
+
     <p>{{ post.title }}
     <br>
     {{ post.content|truncatewords:10 }}
