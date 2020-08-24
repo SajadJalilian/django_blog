@@ -17,6 +17,8 @@ class PostListView(ListView):
     ordering = ['-date_posted']
     paginate_by = 5
 
+    # TODO: add total comment count to post via annotate for performance reasons
+
 
 class UserPostListView(ListView):
     model = Post
@@ -41,7 +43,8 @@ def post_detail_view(request, pk):
             name = request.POST.get('name')
             email = request.POST.get('email')
 
-            comment = Comment.objects.create(post=post, content=content, name=name, email=email)
+            comment = Comment.objects.create(
+                post=post, content=content, name=name, email=email)
             comment.save()
     else:
         comment_form = CommentForm
@@ -105,7 +108,8 @@ class CategoryListView(ListView):
 
 
 def category_post_list_view(request, category):
-    post_list = Post.objects.filter(categories__title=category).order_by('-date_posted')
+    post_list = Post.objects.filter(
+        categories__title=category).order_by('-date_posted')
 
     page = request.GET.get('page', 1)
 
@@ -117,7 +121,7 @@ def category_post_list_view(request, category):
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
 
-    return render(request, 'blog/category_post.html', {'category_post':posts, 'category':category})
+    return render(request, 'blog/category_post.html', {'category_post': posts, 'category': category})
 
 
 class CategoryCreateView(LoginRequiredMixin, CreateView):

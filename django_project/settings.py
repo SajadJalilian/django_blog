@@ -1,3 +1,4 @@
+
 """
 Django settings for django_project project.
 
@@ -37,10 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # My Apps
-    'blog',
-    'users',
-    'analytics',
-    'dashboard',
+    'blog.apps.BlogConfig',
+    'users.apps.UsersConfig',
+    'analytics.apps.AnalyticsConfig',
+    'dashboard.apps.DashboardConfig',
 
     # Crispy forms
     'crispy_forms',
@@ -48,7 +49,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'captcha',
     'imagekit',
-    
+
 ]
 
 MIDDLEWARE = [

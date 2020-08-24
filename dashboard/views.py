@@ -141,7 +141,6 @@ def post_detail_view(request, pk):
     title = 'Post Update'
     post = Post.objects.get(id=pk)
     comments = Comment.objects.filter(post__id=pk)
-    
 
     context = {
         'title': title,

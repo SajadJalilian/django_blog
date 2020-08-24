@@ -8,4 +8,4 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = ['title', 'content', 'date_posted', 'author']
 
-# TODO add Serializers for Category and Comment
+# TODO: add Serializers for Category and Comment

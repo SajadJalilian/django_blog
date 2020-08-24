@@ -22,7 +22,8 @@ class Category(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
-    image = models.ImageField(upload_to='image', default='default_post_image.jpg')
+    image = models.ImageField(
+        upload_to='image', default='default_post_image.jpg')
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     categories = models.ManyToManyField(Category)
@@ -42,7 +43,7 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('blog:post-detail', kwargs={'pk': self.pk})
-        
+
 
 class Comment(models.Model):
     name = models.CharField(max_length=200)

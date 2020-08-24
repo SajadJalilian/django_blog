@@ -10,4 +10,4 @@ class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
 
 
-# TODO add ViewSet for Category and Comment
+# TODO: add ViewSet for Category and Comment
