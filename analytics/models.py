@@ -10,8 +10,7 @@ User = settings.AUTH_USER_MODEL
 
 
 class ObjectViewed(models.Model):
-    user = models.ForeignKey(
-        User, blank=True, null=True, on_delete=models.CASCADE)
+    user = models.PositiveIntegerField(blank=True, null=True)
     ip_address = models.CharField(max_length=220, blank=True, null=True)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
@@ -29,8 +28,12 @@ class ObjectViewed(models.Model):
 
 def get_object_viewed_receiver(sender, instance, request, *args, **kwargs):
     c_type = ContentType.objects.get_for_model(sender)
+    if request.user.id is None:
+        user = None
+    else:
+        user = request.user.id
     new_view_obj = ObjectViewed.objects.create(
-        user=request.user,
+        user=user,
         content_type=c_type,
         object_id=instance.id,
         ip_address=get_client_ip(request)

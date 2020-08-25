@@ -8,6 +8,7 @@ from analytics.signals import object_viewed_signal
 
 from .forms import CommentForm
 from .models import Category, Comment, Post
+# from django.db.models import Count
 
 
 class PostListView(ListView):
@@ -18,6 +19,12 @@ class PostListView(ListView):
     paginate_by = 5
 
     # TODO: add total comment count to post via annotate for performance reasons
+
+    # def get_queryset(self):
+    #     return super().get_queryset().annotate(
+    #         ncomment=Count('comment')
+    #     ).filter(post=self.post
+    #              ).order_by('-pub_date')
 
 
 class UserPostListView(ListView):
