@@ -10,7 +10,7 @@ User = settings.AUTH_USER_MODEL
 
 
 class ObjectViewed(models.Model):
-    user = models.PositiveIntegerField(blank=True, null=True)
+    user = models.CharField(max_length=1)
     ip_address = models.CharField(max_length=220, blank=True, null=True)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
@@ -28,10 +28,14 @@ class ObjectViewed(models.Model):
 
 def get_object_viewed_receiver(sender, instance, request, *args, **kwargs):
     c_type = ContentType.objects.get_for_model(sender)
+    
+    # IF User is authenticated, save 'U' to datebase
+    # If User is anonymous, save 'A' to database
     if request.user.id is None:
-        user = None
+        user = 'A'
     else:
-        user = request.user.id
+        user = 'U'
+
     new_view_obj = ObjectViewed.objects.create(
         user=user,
         content_type=c_type,
