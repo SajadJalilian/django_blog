@@ -1,0 +1,23 @@
+{% extends 'dashboard/base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<h1>post update</h1>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" value="Submit">
+    </form>
+
+    {% if post.author == user or user.is_superuser %}
+    
+    <hr>
+    <div>
+        <a href="{% url 'dashboard:post-delete' post.id %}">Delete</a>
+    </div>
+
+    {% endif %}
+
+{% endblock content %}

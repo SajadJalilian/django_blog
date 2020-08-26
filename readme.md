@@ -21,10 +21,12 @@ Django-Blog is blogging CMS. It's using Django-web-framework as backend and Djan
 
 - [x] adding dashboard to blog(admin panel)
   - [X] post list page
+    - [X] total comment number
+    - [X] post author
   - [X] post detail page
-    - [ ] comment list
-    - [ ] total comment number
-    - [ ] post author
+    - [X] detele post
+    - [X] update post
+    - [X] comment list
   - [X] category list
   - [X] comment list
     - [X] delete comments in dashboard

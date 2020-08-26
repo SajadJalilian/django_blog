@@ -16,7 +16,7 @@
     {% endif %}
 
 
-    <p>{{ post.title }}
+    <p><a href="{% url 'dashboard:post-detail' post.id %}">{{ post.title }}</a>
     <br>
     {{ post.content|truncatewords:10 }}
     <br>
@@ -26,6 +26,7 @@
         {{ post.title }} |
     {% endfor %}
     <br>
+    Author: {{post.author}} |
     {{post.comment_number}} Comments
     </p>
     <hr>

@@ -2,11 +2,13 @@ from datetime import date, datetime, timedelta
 
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.shortcuts import render, redirect
+from django.db.models import Count
+from django.shortcuts import redirect, render
 
 from analytics.models import ObjectViewed
 from blog.models import Category, Comment, Post
-from django.db.models import Count
+
+from .forms import PostUpdateForm
 
 
 @login_required
@@ -108,6 +110,53 @@ def post_list_view(request):
 
 
 @login_required
+def post_detail_view(request, pk):
+    title = 'Post detail'
+    post = Post.objects.get(id=pk)
+    comments = Comment.objects.filter(post__id=pk)
+
+    context = {
+        'title': title,
+        'post': post,
+        'comments': comments,
+    }
+
+    return render(request, 'dashboard/post_detail.html', context)
+
+
+@login_required
+def post_update_view(request, pk):
+    title = 'Post Update'
+    post = Post.objects.get(id=pk)
+
+    if request.method == 'POST':
+        if post.author == request.user or request.user.is_superuser:
+            form = PostUpdateForm(request.POST, instance=post)
+
+            if form.is_valid():
+                form.instance.author = post.author
+                form.save()
+    else:
+        form = PostUpdateForm(instance=post)
+
+    context = {
+        'title': title,
+        'post': post,
+        'form': form,
+    }
+
+    return render(request, 'dashboard/post_update.html', context)
+
+
+@login_required
+def post_delete_view(request, pk):
+    post = Post.objects.get(id=pk)
+    post.delete()
+
+    return redirect('dashboard:posts')
+
+
+@login_required
 def comment_list_view(request):
     title = 'Comment List'
     comment_number = Comment.objects.all().count()
@@ -137,18 +186,3 @@ def comment_delete_view(request, pk):
     Comment.objects.get(id=pk).delete()
 
     return redirect('dashboard:comments')
-
-
-@login_required
-def post_detail_view(request, pk):
-    title = 'Post Update'
-    post = Post.objects.get(id=pk)
-    comments = Comment.objects.filter(post__id=pk)
-
-    context = {
-        'title': title,
-        'post': post,
-        'comments': comments,
-    }
-
-    return render(request, 'dashboard/post_detail.html', context)

@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.db.models import Count
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
@@ -8,7 +9,6 @@ from analytics.signals import object_viewed_signal
 
 from .forms import CommentForm
 from .models import Category, Comment, Post
-from django.db.models import Count
 
 
 class PostListView(ListView):
@@ -17,8 +17,6 @@ class PostListView(ListView):
     context_object_name = 'posts'
     ordering = ['-date_posted']
     paginate_by = 5
-
-    # TODO: add total comment count to post via annotate for performance reasons
 
     def get_queryset(self):
         return super().get_queryset().annotate(
