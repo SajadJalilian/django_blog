@@ -28,7 +28,7 @@ class ObjectViewed(models.Model):
 
 def get_object_viewed_receiver(sender, instance, request, *args, **kwargs):
     c_type = ContentType.objects.get_for_model(sender)
-    
+
     # IF User is authenticated, save 'U' to datebase
     # If User is anonymous, save 'A' to database
     if request.user.id is None:

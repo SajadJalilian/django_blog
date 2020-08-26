@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 
 from analytics.models import ObjectViewed
 from blog.models import Category, Comment, Post
+from django.db.models import Count
 
 
 @login_required
@@ -82,7 +83,9 @@ def category_list_view(request):
 def post_list_view(request):
     title = 'Post List'
     post_number = Post.objects.all().count()
-    post_list = Post.objects.all().order_by('-date_posted')
+
+    post_list = Post.objects.all().order_by('-date_posted').annotate(
+        comment_number=Count('comment'))
 
     page = request.GET.get('page', 1)
     paginator = Paginator(post_list, 5)
