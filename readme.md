@@ -19,7 +19,7 @@ Django-Blog is blogging CMS. It's using Django-web-framework as backend and Djan
 
 ## Things to do
 
-- [x] adding dashboard to blog(admin panel)
+- [X] adding dashboard to blog(admin panel)
   - [X] post list page
     - [X] total comment number
     - [X] post author
@@ -34,17 +34,17 @@ Django-Blog is blogging CMS. It's using Django-web-framework as backend and Djan
     - [ ] adding stats chart detail
 
 - [X] post pictures
-  - [x] adding picture to posts
+  - [X] adding picture to posts
   - [X] adding thumbnail to post
   - [X] adding thumbnail to template
   - [X] adding 'Read more' to post
 
 - [X] Category
-  - [ ] adding category to post form
+  - [X] adding category to post form
 
-- [x] adding pagination to post pages
+- [X] adding pagination to post pages
 
-- [x] captcha
+- [X] captcha
   - [ ] showing error about filling wrong captcha
   - [ ] customizing captcha
   - [ ] using AJAX to refresh captcha
@@ -52,9 +52,9 @@ Django-Blog is blogging CMS. It's using Django-web-framework as backend and Djan
 - [X] page visits
   - [X] saving ObjectViewed to database
 
-- [x] comments system
-  - [x] adding comment form to post detail html file
-  - [ ] adding reply to comment
+- [X] comments system
+  - [X] adding comment form to post detail html file
+  - [X] adding reply to comment
 
 - [ ] RSS feed
 
@@ -65,7 +65,7 @@ Django-Blog is blogging CMS. It's using Django-web-framework as backend and Djan
   - [ ] new good looking template for blog
   - [ ] adding dashboard
 
-- [x] API
+- [X] API
   - [ ] JWT
   - [ ] adding category
   - [ ] adding comment

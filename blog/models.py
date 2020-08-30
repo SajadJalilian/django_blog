@@ -51,6 +51,20 @@ class Comment(models.Model):
     email = models.EmailField()
     pub_date = models.DateTimeField(default=timezone.now)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    parent = models.ForeignKey(
+        'self', null=True, blank=True, on_delete=models.DO_NOTHING)
+
+    class Meta:
+        ordering = ['-pub_date']
 
     def __str__(self):
         return '{} - {}'.format(self.name, self.content[:20])
+
+    def children(self):  # replaies
+        return Comment.objects.filter(parent=self).order_by('pub_date')
+
+    @property
+    def is_parent(self):
+        if self.parent is not None:
+            return False
+        return True

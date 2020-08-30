@@ -39,7 +39,31 @@
 				<p>name: {{comment.name}}</p>
 				<p>content: {{comment.content}}</p>
 				<p>email: {{comment.email}}</p>
+
+				{% for child_comment in comment.children %}
+					<p>name: {{child_comment.name}}</p>
+					<p>content: {{child_comment.content}}</p>
+					<p>email: {{child_comment.email}}</p>
+				{% endfor %}
+
+				<div>
+				<form method="POST">
+					{% csrf_token %}
+					<fieldset class="form-group">
+						<legend class="border-bottom mb-4">Write Something</legend>
+						{{ comment_form|crispy }}
+						<input type="hidden" name="parent_id" value="{{ comment.id }}">
+					</fieldset>
+					<div class="form-group">
+						<button class="btn btn-outline-info" type="submit">
+							Reply
+						</button>
+					</div>
+				</form>
+				</div>
+
 				<hr>
+
 			{% endfor %}
 			</div>
 		</div>

@@ -2,13 +2,15 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Count
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from analytics.signals import object_viewed_signal
 
 from .forms import CommentForm
 from .models import Category, Comment, Post
+
+from django.urls import reverse
 
 
 class PostListView(ListView):
@@ -37,7 +39,8 @@ class UserPostListView(ListView):
 def post_detail_view(request, pk):
 
     post = get_object_or_404(Post, id=pk)
-    comments = Comment.objects.filter(post=post).order_by('-id')
+    comments = Comment.objects.filter(
+        post=post).order_by('-id').filter(parent=None)
 
     if request.method == 'POST':
         comment_form = CommentForm(request.POST or None)
@@ -45,10 +48,24 @@ def post_detail_view(request, pk):
             content = request.POST.get('content')
             name = request.POST.get('name')
             email = request.POST.get('email')
+            try:
+                parent_id = int(request.POST.get('parent_id'))
+            except ValueError:
+                parent_id = None
+
+            parent_obj = None
+
+            if parent_id:
+                parent_qs = Comment.objects.get(id=parent_id)
+                if parent_qs:
+                    parent_obj = parent_qs
 
             comment = Comment.objects.create(
-                post=post, content=content, name=name, email=email)
+                post=post, content=content, name=name, email=email, parent=parent_obj)
             comment.save()
+
+            return redirect(reverse('blog:post-detail', kwargs={'pk': post.pk}))
+
     else:
         comment_form = CommentForm
 
@@ -66,7 +83,7 @@ def post_detail_view(request, pk):
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     template_name = 'blog/post_create.html'
-    fields = ['title', 'content']
+    fields = ['title', 'content', 'categories']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
