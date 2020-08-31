@@ -45,7 +45,7 @@ Django-Blog is blogging CMS. It's using Django-web-framework as backend and Djan
 - [X] adding pagination to post pages
 
 - [X] captcha
-  - [ ] showing error about filling wrong captcha
+  - [X] showing error about filling wrong captcha
   - [ ] customizing captcha
   - [ ] using AJAX to refresh captcha
 

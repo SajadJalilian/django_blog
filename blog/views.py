@@ -11,6 +11,7 @@ from .forms import CommentForm
 from .models import Category, Comment, Post
 
 from django.urls import reverse
+from django.contrib import messages
 
 
 class PostListView(ListView):
@@ -50,7 +51,7 @@ def post_detail_view(request, pk):
             email = request.POST.get('email')
             try:
                 parent_id = int(request.POST.get('parent_id'))
-            except ValueError:
+            except:
                 parent_id = None
 
             parent_obj = None
@@ -63,6 +64,9 @@ def post_detail_view(request, pk):
             comment = Comment.objects.create(
                 post=post, content=content, name=name, email=email, parent=parent_obj)
             comment.save()
+
+            messages.success(
+                request, 'Your comment has been posted!')
 
             return redirect(reverse('blog:post-detail', kwargs={'pk': post.pk}))
 
